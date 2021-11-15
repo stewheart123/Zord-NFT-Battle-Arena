@@ -10,5 +10,4 @@ public class TileData : ScriptableObject
 
     public bool containsItem;
     public GameObject item;
-
 }

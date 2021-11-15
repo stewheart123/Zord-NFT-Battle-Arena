@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
         ShowGridPosition(spriteGridPosition, gameObject.transform, "ballz");
         ShowGridPosition(moveToGridPosition, movePoint.transform, "ballzzzz");
+
     }
 
     private void ShowGridPosition(Vector3Int coordinates, Transform target, string name)

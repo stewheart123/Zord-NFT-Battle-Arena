@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,6 +8,7 @@ public class TileUpdateManager : MonoBehaviour
 
     [SerializeField] private TileBase digGroundTile;
     public List<TileBase> tesorro = new List<TileBase>();
+    [SerializeField] TileBase middleTile;
 
     private void Start()
     {
@@ -31,10 +31,17 @@ public class TileUpdateManager : MonoBehaviour
             //map.SetTile(new Vector3Int(-5, -6, 0), tile);
             Debug.Log("tile :" + tile.name + " location:" + randIntX + " " + randIntY);
         }
+        map.SetTile(new Vector3Int(0, 0, 0), middleTile);
 
     }
     public void ReplaceGround(Vector3Int position)
     {
         map.SetTile(position, digGroundTile);
+       // map.SetTile(map.G  , digGroundTile);
+        //Debug.Log( "world centre " +map.GetCellCenterWorld(position));
+        //Debug.Log("world to cell " + map.WorldToCell(position));
+        //Debug.Log("world to local " + map.WorldToLocal(position));
+        //Debug.Log("local to cell" + map.LocalToCell(position));
     }
+    
 }

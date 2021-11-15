@@ -40,7 +40,6 @@ public class TurnManager : MonoBehaviour
    
     private Vector3Int playerGridPosition;
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +68,6 @@ public class TurnManager : MonoBehaviour
         digButton.interactable = false;
         jabButton.interactable = false;
         heavyButton.interactable = false;
-
 
         moveText = GameObject.Find("Panel Left/Move Button/Move Text").GetComponent<Text>();
         actionText = GameObject.Find("Panel Left/Action Button/Action Text").GetComponent<Text>();
@@ -232,7 +230,7 @@ public class TurnManager : MonoBehaviour
     {
         actionText.text = "Action Points " + actionPoints ;
     }
-
+ 
     public void Dig()
     {
         if(actionPoints - dig > -1)
@@ -240,12 +238,15 @@ public class TurnManager : MonoBehaviour
             actionPoints -= dig;
             UpdateActionPoints();
             
-            playerGridPosition.x = (int)gameObject.transform.position.x;
-            playerGridPosition.y = (int)gameObject.transform.position.y;
-            
+            //playerGridPosition.x = (int)gameObject.transform.position.x;
+            playerGridPosition.x = Mathf.FloorToInt(gameObject.transform.position.x) ;
+            //playerGridPosition.y = (int)gameObject.transform.position.y;
+            playerGridPosition.y = Mathf.FloorToInt(gameObject.transform.position.y);
+
             tileUpdateManager.ReplaceGround(playerGridPosition);
             Debug.Log("player grid position  ... " + playerGridPosition);
             playerAnimator.SetTrigger("OnDig");
+
         }
         else 
         {
