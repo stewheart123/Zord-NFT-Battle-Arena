@@ -23,6 +23,8 @@ public class TurnManager : MonoBehaviour
 
     private Button moveButton;
     private Button actionButton;
+    private Button moveSkipButton;
+    private Button actionSkipButton;
 
     private Image turnPipOne;
     private Image turnPipTwo;
@@ -43,6 +45,12 @@ public class TurnManager : MonoBehaviour
         moveButton.onClick.AddListener(RollForMoves);
         actionButton = GameObject.Find("Panel Left/Action Button").GetComponent<Button>();
         actionButton.onClick.AddListener(RollForActionPoints);
+        moveSkipButton = GameObject.Find("Panel Left/Skip Move Button").GetComponent<Button>();
+        moveSkipButton.onClick.AddListener(SkipMoves);
+        moveSkipButton.interactable = false;
+        actionSkipButton = GameObject.Find("Panel Left/Skip Action Button").GetComponent<Button>();
+        actionSkipButton.onClick.AddListener(SkipAction);
+        actionSkipButton.interactable = false;
         moveText = GameObject.Find("Panel Left/Move Button/Move Text").GetComponent<Text>();
         actionText = GameObject.Find("Panel Left/Action Button/Action Text").GetComponent<Text>();
         turnPipOne = GameObject.Find("Panel Left/Turn Pip 1").GetComponent<Image>();
@@ -71,12 +79,22 @@ public class TurnManager : MonoBehaviour
         {
             moveActive = false;
             moveButton.interactable = false;
+            moveSkipButton.interactable = false;
+            if (!turnPipTwo.enabled && turnPipOne.enabled)
+            {
+                actionButton.interactable = true;
+            }
         }
 
         if(actionPoints == 0 && attackActive)
         {
             attackActive = false;
-            actionButton.interactable = false;           
+            actionButton.interactable = false;
+            actionSkipButton.interactable = false;
+            if (!turnPipTwo.enabled && turnPipOne.enabled)
+            {
+                moveButton.interactable = true;
+            }
         }
 
         if(actionButton.interactable == false && moveButton.interactable == false)
@@ -104,12 +122,16 @@ public class TurnManager : MonoBehaviour
     public void RollForActionPoints()
     {
         diceAnimator.SetInteger("DiceRollNumber", 0);
+        actionButton.interactable = false;
+        moveButton.interactable = false;
         StartCoroutine(WaitForActionDiceRollFinish());
     }
 
     public void RollForMoves()
     {
         diceAnimator.SetInteger("DiceRollNumber", 0);
+        actionButton.interactable = false;
+        moveButton.interactable = false;
         StartCoroutine(WaitForMoveDiceRollFinish()); ;
     }
 
@@ -121,7 +143,8 @@ public class TurnManager : MonoBehaviour
         diceAnimator.SetInteger("DiceRollNumber", actionPoints);
         UpdateActionPoints();
         attackActive = true;
-        turnsLeft--;                
+        turnsLeft--;
+        actionSkipButton.interactable = true;
     }
     IEnumerator WaitForMoveDiceRollFinish()
     {  
@@ -131,7 +154,8 @@ public class TurnManager : MonoBehaviour
         diceAnimator.SetInteger("DiceRollNumber", moveSpaces);        
         UpdateMoveSpaces();
         moveActive = true;
-        turnsLeft--;        
+        turnsLeft--;
+        moveSkipButton.interactable = true;
     }
     //to be replaced with 2nd player turn...
     IEnumerator TempcountDown()
@@ -146,6 +170,18 @@ public class TurnManager : MonoBehaviour
         moveButton.interactable = true;
         Debug.Log("...end of player 2 go");
 
+    }
+    public void SkipMoves()
+    {
+        moveSpaces = 0;
+        moveSkipButton.interactable = false;
+        UpdateMoveSpaces();
+    }
+    public void SkipAction()
+    {
+        actionPoints = 0;
+        actionSkipButton.interactable = false;
+        UpdateActionPoints();
     }
 
     public void UpdateMoveSpaces()
@@ -165,11 +201,11 @@ public class TurnManager : MonoBehaviour
             actionPoints -= dig;
             UpdateActionPoints();
             
-            playerGridPosition.x = (int)gameObject.transform.position.x-1;
-            playerGridPosition.y = (int)gameObject.transform.position.y-1;
+            playerGridPosition.x = (int)gameObject.transform.position.x;
+            playerGridPosition.y = (int)gameObject.transform.position.y;
             
             tileUpdateManager.ReplaceGround(playerGridPosition);
-            Debug.Log("player grid position with -1 adjust ... " + playerGridPosition);
+            Debug.Log("player grid position  ... " + playerGridPosition);
         }
         else 
         {

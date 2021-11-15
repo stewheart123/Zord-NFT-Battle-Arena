@@ -155,7 +155,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   hasPlayerSelectedMove: 0
-  isEnemyNextTo: 0
 --- !u!114 &3307622207878223162
 MonoBehaviour:
   m_ObjectHideFlags: 0

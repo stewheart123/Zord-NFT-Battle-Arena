@@ -9,15 +9,13 @@ public class NetworkPlayerSpawner : MonoBehaviourPunCallbacks
     [SerializeField] public GameObject spawnedPlayerTwoPrefab;
     [SerializeField] public Transform playerOneSpawnPoint;
    [SerializeField] public Transform playerTwoSpawnPoint;
-
-
+    
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
         //add code to differentiate between player 1 and 2
         //  spawnedPlayerPrefab = PhotonNetwork.Instantiate("Player", transform.position, transform.rotation);
-        Instantiate(spawnedPlayerOnePrefab, playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
-
+        Instantiate(spawnedPlayerOnePrefab, playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);        
     }
 
     public override void OnLeftRoom()

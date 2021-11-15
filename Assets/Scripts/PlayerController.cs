@@ -11,7 +11,10 @@ public class PlayerController : MonoBehaviour
     public LayerMask outOfBounds;
     private Animator playerAnimator;
     private TurnManager turnManager;
-    private Vector3Int MoveToPosition;
+
+    //for testing 
+    private Vector3Int moveToGridPosition;
+    private Vector3Int spriteGridPosition;
 
     public bool hasPlayerSelectedMove = false;
     
@@ -19,7 +22,17 @@ public class PlayerController : MonoBehaviour
     {
         movePoint.parent = null;
         playerAnimator = gameObject.GetComponent<Animator>();
-        turnManager = gameObject.GetComponent<TurnManager>();           
+        turnManager = gameObject.GetComponent<TurnManager>();
+
+        ShowGridPosition(spriteGridPosition, gameObject.transform, "ballz");
+        ShowGridPosition(moveToGridPosition, movePoint.transform, "ballzzzz");
+    }
+
+    private void ShowGridPosition(Vector3Int coordinates, Transform target, string name)
+    {
+        coordinates.y = (int)target.transform.position.y;
+        coordinates.x = (int)target.transform.position.x;
+        Debug.Log(target.name + " " + coordinates + name);
     }
 
     void Update()
@@ -30,15 +43,17 @@ public class PlayerController : MonoBehaviour
             {
                 turnManager.Dig();
                 playerAnimator.SetTrigger("OnDig");
-                MoveToPosition.y = (int)movePoint.transform.position.y - 1;
-                MoveToPosition.y = (int)movePoint.transform.position.y - 1;
-                Debug.Log("move position with -1 adjust = " + MoveToPosition);
-                
+
+                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
+                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
+
             }
             if (Input.GetKeyDown(KeyCode.J))
             {
                 turnManager.BlockAttack();
                 playerAnimator.SetTrigger("OnDig");
+
+                
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
@@ -57,43 +72,6 @@ public class PlayerController : MonoBehaviour
         if (turnManager.moveActive )
         {
             KeyPressCheck();
-                //if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) )              
-                //{
-                //    if (!Physics2D.OverlapCircle(movePoint.position + Vector3.up , 0.1f, outOfBounds) && turnManager.moveActive)
-                //    {
-                //        movePoint.position +=  Vector3.up;
-                //        turnManager.moveSpaces--;
-                //        turnManager.UpdateMoveSpaces();
-                //    }
-                //}
-                //if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                //{
-                //    if (!Physics2D.OverlapCircle(movePoint.position + Vector3.down, 0.1f, outOfBounds) && turnManager.moveActive)
-                //    {
-                //        movePoint.position += Vector3.down;
-                //        turnManager.moveSpaces--;
-                //        turnManager.UpdateMoveSpaces();
-                //    }
-                //}
-                //if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-                //{
-                //    if (!Physics2D.OverlapCircle(movePoint.position + Vector3.left, 0.1f, outOfBounds) && turnManager.moveActive)
-                //    {
-                //        movePoint.position += Vector3.left;
-                //        turnManager.moveSpaces--;
-                //        turnManager.UpdateMoveSpaces();
-                //    }
-                //}
-                //if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                //{
-                //    if (!Physics2D.OverlapCircle(movePoint.position + Vector3.right, 0.1f, outOfBounds) && turnManager.moveActive)
-                //    {
-                //        movePoint.position += Vector3.right;
-                //        turnManager.moveSpaces--;
-                //        turnManager.UpdateMoveSpaces();
-                //    }
-                //}
-
         }
 
         if (transform.position != movePoint.position)
@@ -117,6 +95,9 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.up;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
+
+                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
+                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
@@ -127,6 +108,9 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.down;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
+
+                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
+                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
@@ -137,6 +121,9 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.left;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
+
+                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
+                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
@@ -147,6 +134,9 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.right;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
+
+                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
+                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
