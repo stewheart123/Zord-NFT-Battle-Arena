@@ -12,7 +12,7 @@ public class TileUpdateManager : MonoBehaviour
 
     private void Start()
     {
-        ReplaceGround(new Vector3Int(-3, -3, 0));
+       // ReplaceGround(new Vector3Int(-3, -3, 0));
         HideTresure();
     }
 

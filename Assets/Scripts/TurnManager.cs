@@ -25,11 +25,16 @@ public class TurnManager : MonoBehaviour
     private Button actionButton;
     private Button moveSkipButton;
     private Button actionSkipButton;
+    private Button digButton;
+    private Button jabButton;
+    private Button heavyButton;
 
     private Image turnPipOne;
     private Image turnPipTwo;
 
     private Animator diceAnimator;
+    private Animator playerAnimator;
+
 
     private TileUpdateManager tileUpdateManager;
    
@@ -40,6 +45,7 @@ public class TurnManager : MonoBehaviour
     void Start()
     {
         diceAnimator = GameObject.Find("Dice").GetComponent<Animator>();
+        playerAnimator = gameObject.GetComponent<Animator>();
 
         moveButton = GameObject.Find("Panel Left/Move Button").GetComponent<Button>();
         moveButton.onClick.AddListener(RollForMoves);
@@ -51,6 +57,20 @@ public class TurnManager : MonoBehaviour
         actionSkipButton = GameObject.Find("Panel Left/Skip Action Button").GetComponent<Button>();
         actionSkipButton.onClick.AddListener(SkipAction);
         actionSkipButton.interactable = false;
+
+        digButton = GameObject.Find("Panel Left/Dig Button").GetComponent<Button>();
+        jabButton = GameObject.Find("Panel Left/Jab Button").GetComponent<Button>();
+        heavyButton = GameObject.Find("Panel Left/Heavy Button").GetComponent<Button>();
+
+        digButton.onClick.AddListener(Dig);
+        jabButton.onClick.AddListener(JabAttack);
+        heavyButton.onClick.AddListener(HeavyAttack);
+
+        digButton.interactable = false;
+        jabButton.interactable = false;
+        heavyButton.interactable = false;
+
+
         moveText = GameObject.Find("Panel Left/Move Button/Move Text").GetComponent<Text>();
         actionText = GameObject.Find("Panel Left/Action Button/Action Text").GetComponent<Text>();
         turnPipOne = GameObject.Find("Panel Left/Turn Pip 1").GetComponent<Image>();
@@ -91,6 +111,10 @@ public class TurnManager : MonoBehaviour
             attackActive = false;
             actionButton.interactable = false;
             actionSkipButton.interactable = false;
+            digButton.interactable = false;
+            jabButton.interactable = false;
+            heavyButton.interactable = false;
+
             if (!turnPipTwo.enabled && turnPipOne.enabled)
             {
                 moveButton.interactable = true;
@@ -145,6 +169,18 @@ public class TurnManager : MonoBehaviour
         attackActive = true;
         turnsLeft--;
         actionSkipButton.interactable = true;
+        
+        if(actionPoints > 4)
+        {
+            digButton.interactable = true;
+            jabButton.interactable = true;
+            heavyButton.interactable = true;
+        }
+        else
+        {
+            digButton.interactable = true;
+            jabButton.interactable = true;            
+        }
     }
     IEnumerator WaitForMoveDiceRollFinish()
     {  
@@ -182,6 +218,9 @@ public class TurnManager : MonoBehaviour
         actionPoints = 0;
         actionSkipButton.interactable = false;
         UpdateActionPoints();
+        digButton.interactable = false;
+        jabButton.interactable = false;
+        heavyButton.interactable = false;
     }
 
     public void UpdateMoveSpaces()
@@ -206,6 +245,7 @@ public class TurnManager : MonoBehaviour
             
             tileUpdateManager.ReplaceGround(playerGridPosition);
             Debug.Log("player grid position  ... " + playerGridPosition);
+            playerAnimator.SetTrigger("OnDig");
         }
         else 
         {
@@ -213,13 +253,14 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void SwpieAttack()
+    public void JabAttack()
     {
         if (actionPoints - swipe > -1)
         {
             actionPoints -= swipe;
             UpdateActionPoints();
             Debug.Log("Is swiping!!");
+            playerAnimator.SetTrigger("OnDig");
         }
         else
         {
@@ -234,10 +275,11 @@ public class TurnManager : MonoBehaviour
            // actionPoints -= block;
             Debug.Log("is blocking. go ended");
             actionPoints = 0;
+            playerAnimator.SetTrigger("OnDig");
             UpdateActionPoints();
         }
     }
-    public void DeathBlowAttack()
+    public void HeavyAttack()
     {
         if (actionPoints - deathBlow > -1)
         {
@@ -245,6 +287,7 @@ public class TurnManager : MonoBehaviour
             if(Random.Range(0,2) == 1)
             {
                 Debug.Log("DeathBlow hits!");
+                playerAnimator.SetTrigger("OnDig");
                 UpdateActionPoints();
             }
             else

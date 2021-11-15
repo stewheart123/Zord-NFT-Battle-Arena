@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.H))
             {
                 turnManager.Dig();
-                playerAnimator.SetTrigger("OnDig");
+               
 
                 ShowGridPosition(spriteGridPosition, gameObject.transform, "");
                 ShowGridPosition(moveToGridPosition, movePoint.transform, "");
@@ -51,19 +51,22 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.J))
             {
                 turnManager.BlockAttack();
-                playerAnimator.SetTrigger("OnDig");
-
                 
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
-                turnManager.SwpieAttack();
-                playerAnimator.SetTrigger("OnDig");
+                turnManager.JabAttack();
+                
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                turnManager.DeathBlowAttack();
-                playerAnimator.SetTrigger("OnDig");
+                turnManager.HeavyAttack();                
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                int x = (int)gameObject.transform.position.x;
+                int y = (int)gameObject.transform.position.y;
+                Debug.Log("current player grid square = " + x + ", " + y );
             }
         }
 
