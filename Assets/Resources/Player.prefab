@@ -195,6 +195,9 @@ MonoBehaviour:
   actionPoints: 0
   moveActive: 0
   attackActive: 0
+  collectableLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &6686516249774169123
 BoxCollider2D:
   m_ObjectHideFlags: 0

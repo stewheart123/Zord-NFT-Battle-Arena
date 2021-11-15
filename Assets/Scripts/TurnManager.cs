@@ -40,6 +40,8 @@ public class TurnManager : MonoBehaviour
    
     private Vector3Int playerGridPosition;
 
+    public LayerMask collectableLayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +77,9 @@ public class TurnManager : MonoBehaviour
         turnPipTwo = GameObject.Find("Panel Left/Turn Pip 2").GetComponent<Image>();
 
         tileUpdateManager = GameObject.Find("Tile Manager").GetComponent<TileUpdateManager>();
+
+        playerCollider = gameObject.GetComponent<BoxCollider2D>();
+        
     }
 
     // Update is called once per frame
@@ -245,8 +250,14 @@ public class TurnManager : MonoBehaviour
 
             tileUpdateManager.ReplaceGround(playerGridPosition);
             Debug.Log("player grid position  ... " + playerGridPosition);
-            playerAnimator.SetTrigger("OnDig");
-
+            playerAnimator.SetTrigger("OnDig");            
+            
+            //if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.001f, collectableLayer))
+            if (Physics2D.OverlapCircle(transform.position, 0.1f, collectableLayer))
+            {
+                Debug.Log("collectable found this gameobject position is... X;" + gameObject.transform.position.x + ", Y: " + gameObject.transform.position.y);
+               
+            }
         }
         else 
         {

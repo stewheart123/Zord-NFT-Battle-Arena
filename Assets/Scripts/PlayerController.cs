@@ -24,16 +24,6 @@ public class PlayerController : MonoBehaviour
         playerAnimator = gameObject.GetComponent<Animator>();
         turnManager = gameObject.GetComponent<TurnManager>();
 
-        ShowGridPosition(spriteGridPosition, gameObject.transform, "ballz");
-        ShowGridPosition(moveToGridPosition, movePoint.transform, "ballzzzz");
-
-    }
-
-    private void ShowGridPosition(Vector3Int coordinates, Transform target, string name)
-    {
-        coordinates.y = (int)target.transform.position.y;
-        coordinates.x = (int)target.transform.position.x;
-        Debug.Log(target.name + " " + coordinates + name);
     }
 
     void Update()
@@ -42,11 +32,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
-                turnManager.Dig();
-               
-
-                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
-                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
+                turnManager.Dig();        
 
             }
             if (Input.GetKeyDown(KeyCode.J))
@@ -99,9 +85,6 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.up;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
-
-                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
-                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
@@ -113,8 +96,6 @@ public class PlayerController : MonoBehaviour
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
 
-                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
-                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
@@ -126,8 +107,6 @@ public class PlayerController : MonoBehaviour
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
 
-                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
-                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }
@@ -139,8 +118,6 @@ public class PlayerController : MonoBehaviour
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
 
-                ShowGridPosition(spriteGridPosition, gameObject.transform, "");
-                ShowGridPosition(moveToGridPosition, movePoint.transform, "");
             }
             return;
         }

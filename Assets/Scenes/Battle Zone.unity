@@ -1509,7 +1509,8 @@ GameObject:
   - component: {fileID: 1221071600}
   - component: {fileID: 1221071602}
   - component: {fileID: 1221071601}
-  m_Layer: 0
+  - component: {fileID: 1221071603}
+  m_Layer: 7
   m_Name: Tilemap_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5334,6 +5335,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1221071603
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221071599}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &1293251436
 GameObject:
   m_ObjectHideFlags: 0
@@ -11285,7 +11302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9018c2d3ea4e38f4c9bf6e4d709fc13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1908453450}
+  map: {fileID: 1221071602}
   digGroundTile: {fileID: 11400000, guid: be0411df76ca53745b204abe2d9f7c0e, type: 2}
   tesorro:
   - {fileID: 11400000, guid: d279010888a5d134397c8dc6fe36d416, type: 2}
@@ -11298,7 +11315,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5ba259a37f955dc4aae6497ef7d21819, type: 2}
   - {fileID: 11400000, guid: 7cd93d29d6527214e980832d61e10c54, type: 2}
   - {fileID: 11400000, guid: e48468555725c5347a37b65e91e18a41, type: 2}
-  middleTile: {fileID: 11400000, guid: aa824bbe42c9b8147a014ae57f8d5fed, type: 2}
 --- !u!4 &1690937808
 Transform:
   m_ObjectHideFlags: 0
