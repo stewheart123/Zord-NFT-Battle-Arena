@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 public class TurnManager : MonoBehaviour
 {
@@ -32,6 +33,9 @@ public class TurnManager : MonoBehaviour
     private Image turnPipOne;
     private Image turnPipTwo;
 
+    private Image displayGroundTileImage;
+    [SerializeField] Sprite emptyGroundImage;
+
     private Animator diceAnimator;
     private Animator playerAnimator;
 
@@ -47,17 +51,23 @@ public class TurnManager : MonoBehaviour
     {
         diceAnimator = GameObject.Find("Dice").GetComponent<Animator>();
         playerAnimator = gameObject.GetComponent<Animator>();
-
         moveButton = GameObject.Find("Panel Left/Move Button").GetComponent<Button>();
-        moveButton.onClick.AddListener(RollForMoves);
         actionButton = GameObject.Find("Panel Left/Action Button").GetComponent<Button>();
-        actionButton.onClick.AddListener(RollForActionPoints);
         moveSkipButton = GameObject.Find("Panel Left/Skip Move Button").GetComponent<Button>();
-        moveSkipButton.onClick.AddListener(SkipMoves);
-        moveSkipButton.interactable = false;
         actionSkipButton = GameObject.Find("Panel Left/Skip Action Button").GetComponent<Button>();
+
+        moveText = GameObject.Find("Panel Left/Move Button/Move Text").GetComponent<Text>();
+        actionText = GameObject.Find("Panel Left/Action Button/Action Text").GetComponent<Text>();
+        turnPipOne = GameObject.Find("Panel Left/Turn Pip 1").GetComponent<Image>();
+        turnPipTwo = GameObject.Find("Panel Left/Turn Pip 2").GetComponent<Image>();
+
+        tileUpdateManager = GameObject.Find("Tile Manager").GetComponent<TileUpdateManager>();
+        displayGroundTileImage = GameObject.Find("Current Dig Image").GetComponent<Image>();
+
+        moveButton.onClick.AddListener(RollForMoves);        
+        actionButton.onClick.AddListener(RollForActionPoints);        
+        moveSkipButton.onClick.AddListener(SkipMoves);
         actionSkipButton.onClick.AddListener(SkipAction);
-        actionSkipButton.interactable = false;
 
         digButton = GameObject.Find("Panel Left/Dig Button").GetComponent<Button>();
         jabButton = GameObject.Find("Panel Left/Jab Button").GetComponent<Button>();
@@ -70,16 +80,9 @@ public class TurnManager : MonoBehaviour
         digButton.interactable = false;
         jabButton.interactable = false;
         heavyButton.interactable = false;
+        moveSkipButton.interactable = false;
+        actionSkipButton.interactable = false;
 
-        moveText = GameObject.Find("Panel Left/Move Button/Move Text").GetComponent<Text>();
-        actionText = GameObject.Find("Panel Left/Action Button/Action Text").GetComponent<Text>();
-        turnPipOne = GameObject.Find("Panel Left/Turn Pip 1").GetComponent<Image>();
-        turnPipTwo = GameObject.Find("Panel Left/Turn Pip 2").GetComponent<Image>();
-
-        tileUpdateManager = GameObject.Find("Tile Manager").GetComponent<TileUpdateManager>();
-
-        playerCollider = gameObject.GetComponent<BoxCollider2D>();
-        
     }
 
     // Update is called once per frame
@@ -124,10 +127,10 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if(actionButton.interactable == false && moveButton.interactable == false)
-        {
+        //if(actionButton.interactable == false && moveButton.interactable == false)
+        //{
           
-        }
+        //}
 
     }
     private void RollButtonCheck()
@@ -238,31 +241,48 @@ public class TurnManager : MonoBehaviour
  
     public void Dig()
     {
-        if(actionPoints - dig > -1)
+        if (actionPoints - dig > -1)
         {
-            actionPoints -= dig;
+            actionPoints = 0;
             UpdateActionPoints();
-            
+
             //playerGridPosition.x = (int)gameObject.transform.position.x;
-            playerGridPosition.x = Mathf.FloorToInt(gameObject.transform.position.x) ;
+            playerGridPosition.x = Mathf.FloorToInt(gameObject.transform.position.x);
             //playerGridPosition.y = (int)gameObject.transform.position.y;
             playerGridPosition.y = Mathf.FloorToInt(gameObject.transform.position.y);
 
-            tileUpdateManager.ReplaceGround(playerGridPosition);
-            Debug.Log("player grid position  ... " + playerGridPosition);
-            playerAnimator.SetTrigger("OnDig");            
+            TileBase tileToDig = tileUpdateManager.treasureMap.GetTile(playerGridPosition);
+            Debug.Log(tileToDig);
+            Debug.Log(tileUpdateManager.treasureMap.GetSprite(playerGridPosition));
+
+            if(tileUpdateManager.treasureMap.GetSprite(playerGridPosition) != null)
+            {
+                displayGroundTileImage.sprite = tileUpdateManager.treasureMap.GetSprite(playerGridPosition);
+            }
+            else
+            {
+                displayGroundTileImage.sprite = emptyGroundImage;
+            }
             
+            Debug.Log("player grid position  ... " + playerGridPosition);
+            playerAnimator.SetTrigger("OnDig");
+
             //if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.001f, collectableLayer))
             if (Physics2D.OverlapCircle(transform.position, 0.1f, collectableLayer))
             {
                 Debug.Log("collectable found this gameobject position is... X;" + gameObject.transform.position.x + ", Y: " + gameObject.transform.position.y);
-               
+
             }
+
+            tileUpdateManager.ReplaceGround(playerGridPosition);
+
         }
-        else 
+        else
         {
             Debug.Log("not enough action points to dig!");
+         
         }
+
     }
 
     public void JabAttack()

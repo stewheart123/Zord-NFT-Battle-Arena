@@ -4,7 +4,8 @@ using UnityEngine.Tilemaps;
 
 public class TileUpdateManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap map;
+    [SerializeField] public Tilemap map;
+    [SerializeField] public Tilemap treasureMap;
 
     [SerializeField] private TileBase digGroundTile;
     public List<TileBase> tesorro = new List<TileBase>();    
@@ -23,7 +24,7 @@ public class TileUpdateManager : MonoBehaviour
             int randIntX = Random.Range(-5, 5);
             int randIntY = Random.Range(1, -7);
 
-            map.SetTile(new Vector3Int(randIntX, randIntY, 0), tile);
+            treasureMap.SetTile(new Vector3Int(randIntX, randIntY, 0), tile);
             //map.SetTile(new Vector3Int(-5, -6, 0), tile);
             Debug.Log("tile :" + tile.name + " location:" + randIntX + " " + randIntY);
         }        

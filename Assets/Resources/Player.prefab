@@ -106,7 +106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 1062266681453288945, guid: cbb9fbffd9309c640a6921f76b239059, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   actionPoints: 0
   moveActive: 0
   attackActive: 0
+  emptyGroundImage: {fileID: 1876339647452818082, guid: 00789c787ead40242bff331a531f9330, type: 3}
   collectableLayer:
     serializedVersion: 2
     m_Bits: 128
