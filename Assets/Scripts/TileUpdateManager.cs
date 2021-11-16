@@ -22,7 +22,7 @@ public class TileUpdateManager : MonoBehaviour
 
     private void HideTresure()
     {
-        treasureCount = tesorro.Count - 3;
+        treasureCount = tesorro.Count;
 
         List<int> positionsX = new List<int>();
         List<int> positionsY = new List<int>();

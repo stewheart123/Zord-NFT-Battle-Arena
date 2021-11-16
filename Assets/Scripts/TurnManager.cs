@@ -46,11 +46,16 @@ public class TurnManager : MonoBehaviour
 
     public LayerMask collectableLayer;
 
+    private CollectableManager collectableManager;
+
     // Start is called before the first frame update
     void Start()
     {
         diceAnimator = GameObject.Find("Dice").GetComponent<Animator>();
         playerAnimator = gameObject.GetComponent<Animator>();
+
+        collectableManager = GameObject.Find("Collectable Manager").GetComponent<CollectableManager>();
+
         moveButton = GameObject.Find("Panel Left/Move Button").GetComponent<Button>();
         actionButton = GameObject.Find("Panel Left/Action Button").GetComponent<Button>();
         moveSkipButton = GameObject.Find("Panel Left/Skip Move Button").GetComponent<Button>();
@@ -258,6 +263,8 @@ public class TurnManager : MonoBehaviour
             if(tileUpdateManager.treasureMap.GetSprite(playerGridPosition) != null)
             {
                 displayGroundTileImage.sprite = tileUpdateManager.treasureMap.GetSprite(playerGridPosition);
+                collectableManager.ShowCollectableEmblem(collectableManager.indexUsed);
+                collectableManager.indexUsed++;
             }
             else
             {
