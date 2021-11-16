@@ -8,31 +8,49 @@ public class TileUpdateManager : MonoBehaviour
     [SerializeField] public Tilemap treasureMap;
 
     [SerializeField] private TileBase digGroundTile;
-    public List<TileBase> tesorro = new List<TileBase>();    
+    public List<TileBase> tesorro = new List<TileBase>();
+
+    const int BOARD_X = 5;
+    const int BOARD_Y = -7;
+    private int treasureCount;
 
     private void Start()
-    {
+    {   
         HideTresure();
+
     }
 
     private void HideTresure()
     {
-        
-        //NEED TO STOP ITEMS OVERLAPPING IF ON SAME SQUARE...
-        foreach(TileBase tile in tesorro)
+        treasureCount = tesorro.Count - 3;
+
+        List<int> positionsX = new List<int>();
+        List<int> positionsY = new List<int>();
+
+        for (int x = -5; x < BOARD_X; x++)
         {
-            int randIntX = Random.Range(-5, 5);
-            int randIntY = Random.Range(1, -7);
+            positionsX.Add(x);
+        }
+        for (int y = 1; y > BOARD_Y; y--)
+        {
+            positionsY.Add(y);
+        }
 
-            treasureMap.SetTile(new Vector3Int(randIntX, randIntY, 0), tile);
-            //map.SetTile(new Vector3Int(-5, -6, 0), tile);
-            Debug.Log("tile :" + tile.name + " location:" + randIntX + " " + randIntY);
-        }        
+        for (int i = 0; i < treasureCount; i++)
+        {
+            int totalPosXIndex = positionsX.Count;
+            int totalPosYIndex = positionsY.Count;
+            int randomPosX = positionsX[Random.Range(0, totalPosXIndex)];
+            int randomPosY = positionsY[Random.Range(0, totalPosYIndex)];
+            treasureMap.SetTile(new Vector3Int(randomPosX, randomPosY, 0), tesorro[i]);
+            positionsX.Remove(randomPosX);
+            positionsY.Remove(randomPosY);
 
+        }
     }
     public void ReplaceGround(Vector3Int position)
     {
         map.SetTile(position, digGroundTile);       
     }
-    
+
 }
