@@ -47,6 +47,7 @@ public class TurnManager : MonoBehaviour
     public LayerMask collectableLayer;
 
     private CollectableManager collectableManager;
+    private RoundManager roundManager;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,7 @@ public class TurnManager : MonoBehaviour
         playerAnimator = gameObject.GetComponent<Animator>();
 
         collectableManager = GameObject.Find("Collectable Manager").GetComponent<CollectableManager>();
+        roundManager = GameObject.Find("Round Manager").GetComponent<RoundManager>();
 
         moveButton = GameObject.Find("Panel Left/Move Button").GetComponent<Button>();
         actionButton = GameObject.Find("Panel Left/Action Button").GetComponent<Button>();
@@ -208,6 +210,7 @@ public class TurnManager : MonoBehaviour
     IEnumerator TempcountDown()
     {
         turnsLeft = 2;
+        roundManager.SwitchPlayerIconHighlight();
         Debug.Log("simulting other player go...");
         yield return new WaitForSeconds(5);
         
@@ -216,6 +219,8 @@ public class TurnManager : MonoBehaviour
         actionButton.interactable = true;
         moveButton.interactable = true;
         Debug.Log("...end of player 2 go");
+
+        roundManager.SwitchPlayerIconHighlight();
 
     }
     public void SkipMoves()
@@ -251,14 +256,12 @@ public class TurnManager : MonoBehaviour
             actionPoints = 0;
             UpdateActionPoints();
 
-            //playerGridPosition.x = (int)gameObject.transform.position.x;
-            playerGridPosition.x = Mathf.FloorToInt(gameObject.transform.position.x);
-            //playerGridPosition.y = (int)gameObject.transform.position.y;
+            playerGridPosition.x = Mathf.FloorToInt(gameObject.transform.position.x);            
             playerGridPosition.y = Mathf.FloorToInt(gameObject.transform.position.y);
 
             TileBase tileToDig = tileUpdateManager.treasureMap.GetTile(playerGridPosition);
-            Debug.Log(tileToDig);
-            Debug.Log(tileUpdateManager.treasureMap.GetSprite(playerGridPosition));
+          //  Debug.Log(tileToDig);
+            //Debug.Log(tileUpdateManager.treasureMap.GetSprite(playerGridPosition));
 
             if(tileUpdateManager.treasureMap.GetSprite(playerGridPosition) != null)
             {
@@ -271,7 +274,7 @@ public class TurnManager : MonoBehaviour
                 displayGroundTileImage.sprite = emptyGroundImage;
             }
             
-            Debug.Log("player grid position  ... " + playerGridPosition);
+           // Debug.Log("player grid position  ... " + playerGridPosition);
             playerAnimator.SetTrigger("OnDig");
 
             //if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.001f, collectableLayer))
