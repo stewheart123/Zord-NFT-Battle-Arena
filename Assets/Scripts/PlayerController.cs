@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     public float moveSpeed = 5f;
     //moves before player to check if not out of bounds
     public Transform movePoint;
     public LayerMask outOfBounds;
     private Animator playerAnimator;
     private TurnManager turnManager;
-
-    //for testing 
-    private Vector3Int moveToGridPosition;
-    private Vector3Int spriteGridPosition;
 
     public bool hasPlayerSelectedMove = false;
     
@@ -23,7 +18,6 @@ public class PlayerController : MonoBehaviour
         movePoint.parent = null;
         playerAnimator = gameObject.GetComponent<Animator>();
         turnManager = gameObject.GetComponent<TurnManager>();
-
     }
 
     void Update()
@@ -33,28 +27,19 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.H))
             {
                 turnManager.Dig();        
-
             }
             if (Input.GetKeyDown(KeyCode.J))
             {
-                turnManager.BlockAttack();
-                
+                turnManager.BlockAttack();                
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
-                turnManager.JabAttack();
-                
+                turnManager.JabAttack();                
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
                 turnManager.HeavyAttack();                
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                int x = (int)gameObject.transform.position.x;
-                int y = (int)gameObject.transform.position.y;
-                Debug.Log("current player grid square = " + x + ", " + y );
-            }
+            }           
         }
 
         //constantly moves player towards movepoint.
@@ -73,9 +58,8 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("IsMoving", false);
         }
        
-
-
     }
+
     private void KeyPressCheck()     
     {
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -95,7 +79,6 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.down;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
-
             }
             return;
         }
@@ -106,7 +89,6 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.left;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
-
             }
             return;
         }
@@ -117,7 +99,6 @@ public class PlayerController : MonoBehaviour
                 movePoint.position += Vector3.right;
                 turnManager.moveSpaces--;
                 turnManager.UpdateMoveSpaces();
-
             }
             return;
         }

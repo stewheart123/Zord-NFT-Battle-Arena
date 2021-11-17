@@ -48,6 +48,7 @@ public class TurnManager : MonoBehaviour
 
     private CollectableManager collectableManager;
     private RoundManager roundManager;
+    private Slider healthSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,8 @@ public class TurnManager : MonoBehaviour
 
         collectableManager = GameObject.Find("Collectable Manager").GetComponent<CollectableManager>();
         roundManager = GameObject.Find("Round Manager").GetComponent<RoundManager>();
+
+        healthSlider = GameObject.Find("Panel Left/Health Slider").GetComponent<Slider>();
 
         moveButton = GameObject.Find("Panel Left/Move Button").GetComponent<Button>();
         actionButton = GameObject.Find("Panel Left/Action Button").GetComponent<Button>();
@@ -277,12 +280,12 @@ public class TurnManager : MonoBehaviour
            // Debug.Log("player grid position  ... " + playerGridPosition);
             playerAnimator.SetTrigger("OnDig");
 
-            //if (Physics2D.OverlapCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.001f, collectableLayer))
-            if (Physics2D.OverlapCircle(transform.position, 0.1f, collectableLayer))
-            {
-                Debug.Log("collectable found this gameobject position is... X;" + gameObject.transform.position.x + ", Y: " + gameObject.transform.position.y);
+           
+            //if (Physics2D.OverlapCircle(transform.position, 0.1f, collectableLayer))
+            //{
+            //    Debug.Log("collectable found this gameobject position is... X;" + gameObject.transform.position.x + ", Y: " + gameObject.transform.position.y);
 
-            }
+            //}
 
             tileUpdateManager.ReplaceGround(playerGridPosition);
 
@@ -343,6 +346,10 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("not enought action points!");
         }
+    }
+    public void UpdateHealth(int damage)
+    {
+        healthSlider.value -= damage;
     }
     
 }
