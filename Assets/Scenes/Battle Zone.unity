@@ -2019,6 +2019,15 @@ MonoBehaviour:
   - {fileID: 1217519046}
   - {fileID: 688213247}
   - {fileID: 936419992}
+  collectableItems:
+  - {fileID: 2280153308612457346, guid: b00ebd420ff95dc4a98f67daeeeca4cb, type: 3}
+  - {fileID: 770234739036457229, guid: 667faad2f6083b24ab6205290bb47ee3, type: 3}
+  - {fileID: 6306655950833429832, guid: e85a40915ba394e4ba51fbdfca378d8e, type: 3}
+  - {fileID: 7900760161974632817, guid: 7d240561250ec4447bafa25d600aa02c, type: 3}
+  - {fileID: 7939479820009065050, guid: 7263f55f0bd3c9f43a8fa9c42cb006e7, type: 3}
+  - {fileID: 1951180413560416080, guid: 466f372aa824cdb4eaf61a952ceb8726, type: 3}
+  - {fileID: 8654353699904549477, guid: 1ec93634cb0a339499ddadf1bb940d5c, type: 3}
+  collectableCount: 0
 --- !u!4 &820948153
 Transform:
   m_ObjectHideFlags: 0
@@ -13116,6 +13125,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd99a19b7da6e7547b4ad32e0fac2e89, type: 2}
   - {fileID: 11400000, guid: 42c5e3a236104d349a6a1ee7619a6086, type: 2}
   - {fileID: 11400000, guid: cf227c3d662c26d4b89bbe823eeec197, type: 2}
+  collectableManager: {fileID: 0}
 --- !u!4 &1690937808
 Transform:
   m_ObjectHideFlags: 0

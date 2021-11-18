@@ -116,6 +116,7 @@ public class TurnManager : MonoBehaviour
             moveActive = false;
             moveButton.interactable = false;
             moveSkipButton.interactable = false;
+
             if (!turnPipTwo.enabled && turnPipOne.enabled)
             {
                 actionButton.interactable = true;
@@ -268,9 +269,9 @@ public class TurnManager : MonoBehaviour
 
             if(tileUpdateManager.treasureMap.GetSprite(playerGridPosition) != null)
             {
-                displayGroundTileImage.sprite = tileUpdateManager.treasureMap.GetSprite(playerGridPosition);
-                collectableManager.ShowCollectableEmblem(collectableManager.indexUsed);
-                collectableManager.indexUsed++;
+               displayGroundTileImage.sprite = tileUpdateManager.treasureMap.GetSprite(playerGridPosition);
+               collectableManager.ShowCollectableEmblem(displayGroundTileImage.sprite.name);
+                tileUpdateManager.treasureMap.SetTile(playerGridPosition, null);
             }
             else
             {
