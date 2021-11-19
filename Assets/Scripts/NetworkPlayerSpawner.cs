@@ -16,15 +16,16 @@ public class NetworkPlayerSpawner : MonoBehaviourPunCallbacks
         //add code to differentiate between player 1 and 2
         //  spawnedPlayerPrefab = PhotonNetwork.Instantiate("Player", transform.position, transform.rotation);
 
-        if(GameObject.Find("Player(Clone)") == null)
+        if (GameObject.Find("Player(Clone)") == null)
         {
-            Instantiate(spawnedPlayerOnePrefab, playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
+            PhotonNetwork.Instantiate("Player", playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
         }
         else
         {
-            Instantiate(spawnedPlayerTwoPrefab, playerTwoSpawnPoint.transform.position, playerTwoSpawnPoint.transform.rotation);
+            PhotonNetwork.Instantiate("Player 2", playerTwoSpawnPoint.transform.position, playerTwoSpawnPoint.transform.rotation);
         }
-        
+        //PhotonNetwork.Instantiate("Player", playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
+
     }
 
     public override void OnLeftRoom()

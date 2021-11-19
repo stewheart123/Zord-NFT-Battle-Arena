@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1311217976439942190}
   - component: {fileID: 6535065461026426809}
   - component: {fileID: 7142196674434426167}
+  - component: {fileID: 7461805109325313997}
   m_Layer: 6
   m_Name: Player 2
   m_TagString: Player
@@ -144,7 +145,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 7461805109325313997}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -196,6 +198,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7461805109325313997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113796451841396915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!1 &6113796452988352335
 GameObject:
   m_ObjectHideFlags: 0
