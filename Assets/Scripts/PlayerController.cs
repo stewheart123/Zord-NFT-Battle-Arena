@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,21 +12,29 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimator;
     private TurnManager turnManager;
     public bool isPlayerOne;
+    private PhotonView photonView;
 
     public bool hasPlayerSelectedMove = false;
     
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         movePoint.parent = null;
         playerAnimator = gameObject.GetComponent<Animator>();
         turnManager = gameObject.GetComponent<TurnManager>();
-        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        //Debug.Log("amount of players.... " + GameObject.FindGameObjectsWithTag("Player").Length);
+        Debug.Log(PhotonNetwork.PlayerList.Length + "player length");
+        foreach (var person in PhotonNetwork.PlayerList)
         {
-            isPlayerOne = false;
+            Debug.Log("playerlist .. " + person);
+        }
+        if(PhotonNetwork.PlayerList.Length == 1)
+        {
+            isPlayerOne = true;
         }
         else
         {
-            isPlayerOne = true;
+            isPlayerOne = false;
         }
     }
 
@@ -71,45 +80,49 @@ public class PlayerController : MonoBehaviour
 
     private void KeyPressCheck()     
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        if (photonView.IsMine)
         {
-            if (!Physics2D.OverlapCircle(movePoint.position + Vector3.up, 0.1f, outOfBounds) && turnManager.moveActive)
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
-                movePoint.position += Vector3.up;
-                turnManager.moveSpaces--;
-                turnManager.UpdateMoveSpaces();
+                if (!Physics2D.OverlapCircle(movePoint.position + Vector3.up, 0.1f, outOfBounds) && turnManager.moveActive)
+                {
+                    movePoint.position += Vector3.up;
+                    turnManager.moveSpaces--;
+                    turnManager.UpdateMoveSpaces();
+                }
+                return;
             }
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-        {
-            if (!Physics2D.OverlapCircle(movePoint.position + Vector3.down, 0.1f, outOfBounds) && turnManager.moveActive)
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
-                movePoint.position += Vector3.down;
-                turnManager.moveSpaces--;
-                turnManager.UpdateMoveSpaces();
+                if (!Physics2D.OverlapCircle(movePoint.position + Vector3.down, 0.1f, outOfBounds) && turnManager.moveActive)
+                {
+                    movePoint.position += Vector3.down;
+                    turnManager.moveSpaces--;
+                    turnManager.UpdateMoveSpaces();
+                }
+                return;
             }
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        {
-            if (!Physics2D.OverlapCircle(movePoint.position + Vector3.left, 0.1f, outOfBounds) && turnManager.moveActive)
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
-                movePoint.position += Vector3.left;
-                turnManager.moveSpaces--;
-                turnManager.UpdateMoveSpaces();
+                if (!Physics2D.OverlapCircle(movePoint.position + Vector3.left, 0.1f, outOfBounds) && turnManager.moveActive)
+                {
+                    movePoint.position += Vector3.left;
+                    turnManager.moveSpaces--;
+                    turnManager.UpdateMoveSpaces();
+                }
+                return;
             }
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        {
-            if (!Physics2D.OverlapCircle(movePoint.position + Vector3.right, 0.1f, outOfBounds) && turnManager.moveActive)
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
-                movePoint.position += Vector3.right;
-                turnManager.moveSpaces--;
-                turnManager.UpdateMoveSpaces();
+                if (!Physics2D.OverlapCircle(movePoint.position + Vector3.right, 0.1f, outOfBounds) && turnManager.moveActive)
+                {
+                    movePoint.position += Vector3.right;
+                    turnManager.moveSpaces--;
+                    turnManager.UpdateMoveSpaces();
+                }
+                return;
             }
-            return;
         }
+        
     }
 }

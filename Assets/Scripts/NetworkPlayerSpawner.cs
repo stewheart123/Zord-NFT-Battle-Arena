@@ -14,11 +14,14 @@ public class NetworkPlayerSpawner : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         //add code to differentiate between player 1 and 2
-        //  spawnedPlayerPrefab = PhotonNetwork.Instantiate("Player", transform.position, transform.rotation);
+        //  spawnedPlayerPrefab = PhotonNetwork.Instantiate("Player", transform.position, transform.rotation);      
 
-        if (GameObject.Find("Player(Clone)") == null)
+        //this doesnt work because its looking locally, it needs to look on the photon network instead!
+        if (PhotonNetwork.PlayerList.Length == 0)
         {
             PhotonNetwork.Instantiate("Player", playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
+
+            
         }
         else
         {
