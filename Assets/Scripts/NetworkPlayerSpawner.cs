@@ -17,16 +17,16 @@ public class NetworkPlayerSpawner : MonoBehaviourPunCallbacks
         //  spawnedPlayerPrefab = PhotonNetwork.Instantiate("Player", transform.position, transform.rotation);      
 
         //this doesnt work because its looking locally, it needs to look on the photon network instead!
-        if (PhotonNetwork.PlayerList.Length == 0)
+        if (PhotonNetwork.PlayerList.Length == 1)
         {
             PhotonNetwork.Instantiate("Player", playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
-
-            
         }
-        else
+        if(PhotonNetwork.PlayerList.Length == 2)
         {
             PhotonNetwork.Instantiate("Player 2", playerTwoSpawnPoint.transform.position, playerTwoSpawnPoint.transform.rotation);
         }
+        
+        
         //PhotonNetwork.Instantiate("Player", playerOneSpawnPoint.transform.position, playerOneSpawnPoint.transform.rotation);
 
     }
