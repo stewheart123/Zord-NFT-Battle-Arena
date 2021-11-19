@@ -92,7 +92,6 @@ public class TurnManager : MonoBehaviour
         heavyButton.interactable = false;
         moveSkipButton.interactable = false;
         actionSkipButton.interactable = false;
-
     }
 
     // Update is called once per frame
@@ -264,9 +263,7 @@ public class TurnManager : MonoBehaviour
             playerGridPosition.y = Mathf.FloorToInt(gameObject.transform.position.y);
 
             TileBase tileToDig = tileUpdateManager.treasureMap.GetTile(playerGridPosition);
-          //  Debug.Log(tileToDig);
-            //Debug.Log(tileUpdateManager.treasureMap.GetSprite(playerGridPosition));
-
+          
             if(tileUpdateManager.treasureMap.GetSprite(playerGridPosition) != null)
             {
                displayGroundTileImage.sprite = tileUpdateManager.treasureMap.GetSprite(playerGridPosition);
@@ -277,8 +274,7 @@ public class TurnManager : MonoBehaviour
             {
                 displayGroundTileImage.sprite = emptyGroundImage;
             }
-            
-           // Debug.Log("player grid position  ... " + playerGridPosition);
+           
             playerAnimator.SetTrigger("OnDig");
 
            

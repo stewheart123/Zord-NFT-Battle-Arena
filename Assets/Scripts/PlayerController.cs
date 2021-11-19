@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask outOfBounds;
     private Animator playerAnimator;
     private TurnManager turnManager;
+    public bool isPlayerOne;
 
     public bool hasPlayerSelectedMove = false;
     
@@ -18,6 +19,14 @@ public class PlayerController : MonoBehaviour
         movePoint.parent = null;
         playerAnimator = gameObject.GetComponent<Animator>();
         turnManager = gameObject.GetComponent<TurnManager>();
+        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        {
+            isPlayerOne = false;
+        }
+        else
+        {
+            isPlayerOne = true;
+        }
     }
 
     void Update()
