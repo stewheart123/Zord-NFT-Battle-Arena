@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (turnManager.attackActive)
+        if (turnManager.attackActive && photonView.IsMine)
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
