@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private TurnManager turnManager;
     public bool isPlayerOne;
     private PhotonView photonView;
+   // public bool isYourTurn;
+    public GameObject otherPlayer;
 
     public bool hasPlayerSelectedMove = false;
     
@@ -31,16 +33,29 @@ public class PlayerController : MonoBehaviour
         if(PhotonNetwork.PlayerList.Length == 1)
         {
             isPlayerOne = true;
+            turnManager.isPlayerTurn = true;
         }
         else
         {
             isPlayerOne = false;
         }
+
+
+        if(isPlayerOne == true)
+        {
+            otherPlayer = GameObject.Find("Player 2(Clone)");
+            turnManager.isPlayerTurn = true;
+        }
+        if (!isPlayerOne)
+        {
+            otherPlayer = GameObject.Find("Player(Clone)");
+            turnManager.isPlayerTurn = false;
+        }
     }
 
     void Update()
     {
-        if (turnManager.attackActive && photonView.IsMine)
+        if (turnManager.attackActive && photonView.IsMine && turnManager.isPlayerTurn)
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
@@ -62,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
         //constantly moves player towards movepoint.
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
-        if (turnManager.moveActive )
+        if (turnManager.moveActive && turnManager.isPlayerTurn)
         {
             KeyPressCheck();
         }
@@ -80,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void KeyPressCheck()     
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && turnManager.isPlayerTurn)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {

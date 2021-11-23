@@ -6,13 +6,14 @@ using UnityEngine.Tilemaps;
 
 public class TurnManager : MonoBehaviour
 {
-    public bool isPlayerTurn = true;
+    public bool isPlayerTurn;
     public int turnsLeft = 2;
     public int moveSpaces;
     public int actionPoints;
 
     public bool moveActive = false;
     public bool attackActive;
+    private bool hasSwitchedGo = false;
 
     private int dig = 1;
     private int block = 2;
@@ -39,7 +40,6 @@ public class TurnManager : MonoBehaviour
     private Animator diceAnimator;
     private Animator playerAnimator;
 
-
     private TileUpdateManager tileUpdateManager;
    
     private Vector3Int playerGridPosition;
@@ -49,10 +49,12 @@ public class TurnManager : MonoBehaviour
     private CollectableManager collectableManager;
     private RoundManager roundManager;
     private Slider healthSlider;
+    private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerController = GetComponent<PlayerController>();
         diceAnimator = GameObject.Find("Dice").GetComponent<Animator>();
         playerAnimator = gameObject.GetComponent<Animator>();
 
@@ -106,10 +108,19 @@ public class TurnManager : MonoBehaviour
 
         if (turnsLeft == 0 && moveSpaces == 0 && actionPoints == 0 )
         {   //REPLACE WITH SWITCH TO OTHER PLAYER        
-            turnPipOne.enabled = false;                   
-            StartCoroutine(TempcountDown());
+            turnPipOne.enabled = false;
+           isPlayerTurn = false;
+            if (!hasSwitchedGo) 
+            {
+                hasSwitchedGo = true;
+                roundManager.SwitchPlayerIconHighlight();
+                playerController.otherPlayer.GetComponent<TurnManager>().isPlayerTurn = true;
+            }
+            
+            
+            // StartCoroutine(TempcountDown());
         }
-        
+
         if (moveSpaces == 0 && moveActive)
         {
             moveActive = false;
@@ -136,11 +147,6 @@ public class TurnManager : MonoBehaviour
                 moveButton.interactable = true;
             }
         }
-
-        //if(actionButton.interactable == false && moveButton.interactable == false)
-        //{
-          
-        //}
 
     }
     private void RollButtonCheck()
