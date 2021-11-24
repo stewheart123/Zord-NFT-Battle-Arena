@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+using System;
+using System.Threading.Tasks;
+
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             otherPlayer = GameObject.Find("Player(Clone)");
             turnManager.isPlayerTurn = false;
+            
         }
     }
 
@@ -140,4 +144,5 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+   
 }

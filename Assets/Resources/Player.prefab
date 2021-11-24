@@ -156,6 +156,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isPlayerOne: 0
+  otherPlayer: {fileID: 0}
   hasPlayerSelectedMove: 0
 --- !u!114 &3307622207878223162
 MonoBehaviour:
